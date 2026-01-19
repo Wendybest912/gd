@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 class UserController extends AbstractController
 {
     #[Route('/user/new', name: 'user_connexion' )]
