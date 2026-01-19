@@ -8,7 +8,7 @@ class User
 {
     private $id;
 
-     #[Assert\NotBlank(message: 'Le pseudo est obligatoire')]
+    #[Assert\NotBlank(message: 'Le pseudo est obligatoire')]
     #[Assert\Length(
         min: 3,
         max: 50,
