@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as assert;
-
+ 
 class User
 {
     private $id;
