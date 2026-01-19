@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Règles - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="rules-container">
+        <h1> Comment jouer ?</h1>
+        
+        <div class="rules-section">
+            <h2> Objectif</h2>
+            <p>Devinez le mot caché avant que le bonhomme ne soit pendu !</p>
+        </div>
+        
+        <div class="rules-section">
+            <h2> Règles du jeu</h2>
+            <ul>
+                <li>Vous avez <strong>6 erreurs</strong> maximum avant de perdre</li>
+                <li>Proposez une lettre à chaque tour</li>
+                <li>Si la lettre est dans le mot, elle s'affiche</li>
+                <li>Si la lettre n'est pas dans le mot, le pendu avance</li>
+            </ul>
+        </div>
+        
+        <div class="rules-section">
+            <h2> Niveaux de difficulté</h2>
+            <ul>
+                <li> <strong>Facile</strong> : Mots de 4-5 lettres</li>
+                <li> <strong>Moyen</strong> : Mots de 6-7 lettres</li>
+                <li> <strong>Difficile</strong> : Mots de 8-10 lettres</li>
+                <li> <strong>Impossible</strong> : Mots de 11-14 lettres</li>
+                <li> <strong>Divin</strong> : Mots de 15+ lettres</li>
+            </ul>
+        </div>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_difficulties') }}" class="btn btn-primary"> Jouer</a>
+            <a href="{{ path('hangman_home') }}" class="btn btn-secondary"> Accueil</a>
+        </div>
+    </div>
+{% endblock %}

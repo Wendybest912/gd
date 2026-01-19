@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisir une difficulté - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="difficulties-container">
+        <h1> Choisissez votre difficulté</h1>
+        
+        <div class="difficulties-grid">
+            {% for diff in difficulties %}
+                <div class="difficulty-card {{ diff.name }}">
+                    <span class="difficulty-icon">{{ diff.icon }}</span>
+                    <h3>{{ diff.label }}</h3>
+                    <p>{{ diff.description }}</p>
+                    <p><small>{{ diff.wordLength }}</small></p>
+                    <a href="{{ path('hangman_play', {difficulty: diff.name}) }}" class="btn btn-primary">
+                         Jouer
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_home') }}" class="btn btn-secondary"> Accueil</a>
+        </div>
+    </div>
+{% endblock %}

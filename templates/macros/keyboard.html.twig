@@ -1,0 +1,16 @@
+{% macro renderKeyboard(usedLetters, correctLetters) %}
+    <div class="keyboard">
+        <div class="keys">
+            {% set alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'|split('') %}
+            {% for letter in alphabet %}
+                {% set isUsed = letter in usedLetters %}
+                {% set isCorrect = letter in correctLetters %}
+                
+                <button class="key {% if isUsed %}{% if isCorrect %}correct{% else %}incorrect{% endif %}{% endif %}" 
+                        {% if isUsed %}disabled{% endif %}>
+                        {{ letter }}
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}

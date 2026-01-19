@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% import 'macros/hangman_drawing.html.twig' as hangman %}
+{% import 'macros/word_display.html.twig' as word_macro %}
+{% import 'macros/keyboard.html.twig' as keyboard_macro %}
+
+{% block title %}Partie {{ difficulty }} - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="game-container">
+        <h1> Partie en cours</h1>
+        
+        <div class="game-info">
+            <p><strong>Difficulté :</strong> <span class="badge {{ difficulty|lower }}">{{ difficulty }}</span></p>
+            <p><strong>Lettres :</strong> {{ word|length }}</p>
+            <p><strong>Essais restants :</strong> {{ maxErrors - errors }}/{{ maxErrors }}</p>
+        </div>
+        
+        {{ hangman.drawHangman(errors) }}
+        
+        <div class="word-section">
+            {{ word_macro.renderWord(word, foundLetters) }}
+        </div>
+        
+        <div class="keyboard-section">
+            <h3>Choisissez une lettre :</h3>
+            {{ keyboard_macro.renderKeyboard(usedLetters, foundLetters) }}
+        </div>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_play', {difficulty: difficulty|lower}) }}" class="btn btn-primary">
+                 Nouveau mot
+            </a>
+            <a href="{{ path('hangman_difficulties') }}" class="btn btn-secondary">
+                 Changer de difficulté
+            </a>
+        </div>
+    </div>
+{% endblock %}

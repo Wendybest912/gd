@@ -1,0 +1,9 @@
+{% macro renderWord(word, foundLetters) %}
+    <div class="word-display">
+        {% for letter in word|upper|split('') %}
+            <span class="letter {% if letter in foundLetters %}found{% endif %}">
+                {{ letter in foundLetters ? letter : '_' }}
+            </span>
+        {% endfor %}
+    </div>
+{% endmacro %}

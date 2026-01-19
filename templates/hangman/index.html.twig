@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="home-container">
+        <h1> Le Maître des Mots - Jeu du Pendu</h1>
+        
+        <p class="description">
+            Bienvenue dans le jeu du pendu thématique ! Choisissez un thème, 
+            devinez le mot caché lettre par lettre, mais attention : 
+            vous n'avez que 7 essais avant que le pendu ne soit complet !
+        </p>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_difficulties') }}" class="btn btn-primary">
+                 Choisir une difficulté
+            </a>
+        </div>
+    </div>
+{% endblock %}
