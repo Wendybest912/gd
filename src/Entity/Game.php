@@ -23,12 +23,6 @@ class Game
     #[ORM\Column(length: 15)]
     private ?string $winOrLose = null;
 
-    #[ORM\ManyToOne(
-        targetEntity: User::class,
-        inversedBy: "Game_played"
-    )]
-    private $user;
-
     public function getId(): ?int
     {
         return $this->id;

@@ -1,1 +1,28 @@
-{{form(form)}}
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}{% endblock %}
+{% block body %}
+    {{ form_start(form, {"attr": {"novalidate": "novalidate"}}) }}
+                
+    {# Erreurs globales #}
+    {{ form_errors(form) }}
+
+    {# Champ Difficulté #}
+    <div class="form-group">
+        {{ form_row(form.difficulty) }}
+    </div>
+
+    {# Champ Nombre d'essais #}
+    <div class="form-group">
+        {{ form_row(form.guessNumber) }}
+    </div>
+
+    {# Champ Résultat #}
+    <div class="form-group">
+        {{ form_row(form.winOrLose) }}
+    </div>
+
+    <button type="submit">Creer</button>
+
+    {{ form_end(form) }}
+{% endblock %}
