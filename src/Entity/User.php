@@ -2,36 +2,38 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as assert;
- 
-class User
+use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Extension\PasswordHasher\PasswordHasherExtension;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private $id;
+    private $passwordHasher;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[Assert\NotBlank(message: 'Le pseudo est obligatoire')]
-    #[Assert\Length(
-        min: 3,
-        max: 50,
-        minMessage: 'Le pseudo est trop court',
-        maxMessage: 'Le pseudo est trop long'
-    )]
-    private  $username = null;
+    #[ORM\Column(length: 180)]
+    private ?string $username = null;
 
-    #[Assert\NotBlank(message: 'L\'email est obligatoire')]
-    #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide')]
-    private  $email = null;
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
 
-    private  $password = null;
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
-
-    #[Assert\PositiveOrZero(message: 'Le nombre de parties ne peut pas être négatif')]
-    private int $gamesPlayed = 0;
-
-    #[Assert\PositiveOrZero(message: 'Le nombre de victoires ne peut pas être négatif')]
-    private int $gamesWon = 0;
-
-
-     public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -44,72 +46,65 @@ class User
     public function setUsername(string $username): static
     {
         $this->username = $username;
+
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-        return $this;
-    }
-
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
-    public function getPassword(): string
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
     public function setPassword(string $password): static
     {
-        $this->password = $password;
+        $this->password = $this->passwordHasher->hashPassword($this, $password);
+
         return $this;
     }
 
-    public function eraseCredentials(): void
+    /**
+     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
+     */
+    public function __serialize(): array
     {
-    }
+        $data = (array) $this;
+        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
 
-    public function getGamesPlayed(): int
-    {
-        return $this->gamesPlayed;
+        return $data;
     }
-
-    public function setGamesPlayed(int $gamesPlayed): static
-    {
-        $this->gamesPlayed = $gamesPlayed;
-        return $this;
-    }
-
-    public function addGamePlayed(): static
-    {
-        $this->gamesPlayed++;
-        return $this;
-    }
-
-    public function getGamesWon(): int
-    {
-        return $this->gamesWon;
-    }
-
-    public function setGamesWon(int $gamesWon): static
-    {
-        $this->gamesWon = $gamesWon;
-        return $this;
-    }
-
-    public function addGameWon(): static
-    {
-        $this->gamesWon++;
-        return $this;
-    }
-
 }

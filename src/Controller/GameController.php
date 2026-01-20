@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
+use App\Entity\Game;
+use App\Form\GameType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-class UserController extends AbstractController
+class GameController extends AbstractController
 {
-    #[Route('/user/new', name: 'user_connexion' )]
+    #[Route('/game/new', name: 'game_form' )]
     public function new(Request $request): Response
     {
-        $user = new User();
+        $game = new Game();
 
-        $form = $this->createForm(UserType::class, $user);    
+        $form = $this->createForm(GameType::class, $game);    
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($user);
+            dump($game);
         }
         
         return $this->render('hangman/new.html.twig', [

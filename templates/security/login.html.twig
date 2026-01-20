@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <h2 class="login-title">
+            <span>&gt;</span> Connexion
+        </h2>
+
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.messageKey }}</div>
+        {% endif %}
+        
+        <form method="post">
+            <div class="mb-3">
+                <label for="username">Pseudonyme</label>
+                <input type="text" id="username" name="_username" class="form-control" placeholder="username..." required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="_password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+             <button type="submit" class="ctf-btn">
+                Se connecter
+            </button>
+        </form>
+
+        <h4 class="sign-up-text">
+            pas de compte ? <a href="">Sign Up Here</a>
+        </h4>
+    </div>
+</div>
+{% endblock %}
