@@ -22,6 +22,10 @@ security:
             form_login:
                 check_path: login
                 login_path: login
+                default_target_path: hangman_home
+            logout:
+                path: logout
+                target: hangman_home
 
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall

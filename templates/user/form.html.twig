@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{parent()}}
+	Créer un compte utilisateur
+{% endblock %}
+
+{% block body %}
+	<h1>Créer un compte utilisateur</h1>
+	{{ form_start(form) }}
+	{# <form> #}
+	{{ form_row(form.username) }}
+	{{ form_row(form.password) }}
+	<input type="submit" value="Créer un compte" class="btn btn-primary">
+	{{ form_end(form) }}
+	{# </form> #}
+
+	<h4 class="sign-up-text">
+            déjà un compte ? <a href="{{ path('login')}}">Connecter vous</a>
+    </h4>
+{% endblock %}

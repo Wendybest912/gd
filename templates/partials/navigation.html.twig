@@ -3,6 +3,13 @@
         <li><a href="{{ path('hangman_home') }}"> Accueil</a></li>
         <li><a href="{{ path('hangman_difficulties') }}"> Jouer</a></li>
         <li><a href="{{ path('hangman_rules') }}"> Règles</a></li>
-        <li><a href="{{ path('login') }}"> Crée un compte</a></li>
+
+        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            <li><a href="{{ path('logout') }}"> Déconnexion</a></li>
+            Bienvenue {{ app.user.username }}
+        {% else %}
+            <li><a href="{{ path('login') }}"> Connexion</a></li>
+            <li><a href="{{ path('user_create') }}"> Inscription</a></li>
+        {% endif %}
     </ul>
 </nav>
