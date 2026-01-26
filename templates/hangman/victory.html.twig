@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Victoire ! - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="result-container victory">
+        <h1> Bravo </h1>
+        
+        <p class="big-emoji">🏆</p>
+        
+        <p class="result-word">Le mot était : <strong>{{ word }}</strong></p>
+        
+        <p>Tu as gagné poto aka le sang de la veine et de l'artere, tu es la lillia que tu pense être les autres c'est des heimerdingers</p>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_difficulties') }}" class="btn btn-primary"> Rejouer</a>
+            <a href="{{ path('hangman_home') }}" class="btn btn-secondary"> Accueil</a>
+        </div>
+    </div>
+{% endblock %}

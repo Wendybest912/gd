@@ -23,6 +23,10 @@ class Game
     #[ORM\Column(length: 15)]
     private ?string $winOrLose = null;
 
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $player = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Game
     public function setWinOrLose(string $winOrLose): static
     {
         $this->winOrLose = $winOrLose;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?User
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(?User $player): static
+    {
+        $this->player = $player;
 
         return $this;
     }

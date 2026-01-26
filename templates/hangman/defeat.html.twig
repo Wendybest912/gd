@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Défaite - Le Maître des Mots{% endblock %}
+
+{% block body %}
+    <div class="result-container defeat">
+        <h1> Perdu !</h1>
+        
+        <p class="big-emoji">😢</p>
+        
+        <p class="result-word">Le mot était : <strong>{{ word }}</strong></p>
+        
+        <p>Réessayez, vous pouvez le faire !</p>
+        
+        <div class="buttons">
+            <a href="{{ path('hangman_difficulties') }}" class="btn btn-primary"> Réessayer</a>
+            <a href="{{ path('hangman_home') }}" class="btn btn-secondary"> Accueil</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,15 +1,22 @@
-{% macro renderKeyboard(usedLetters, correctLetters) %}
+{% macro renderKeyboard(usedLetters, foundLetters) %}
     <div class="keyboard">
         <div class="keys">
             {% set alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'|split('') %}
             {% for letter in alphabet %}
                 {% set isUsed = letter in usedLetters %}
-                {% set isCorrect = letter in correctLetters %}
+                {% set isCorrect = letter in foundLetters %}
                 
-                <button class="key {% if isUsed %}{% if isCorrect %}correct{% else %}incorrect{% endif %}{% endif %}" 
-                        {% if isUsed %}disabled{% endif %}>
+                {% if isUsed %}
+                    {# Lettre déjà utilisée : bouton désactivé #}
+                    <button class="key {% if isCorrect %}correct{% else %}incorrect{% endif %}" disabled>
                         {{ letter }}
-                </button>
+                    </button>
+                {% else %}
+                    {# Lettre disponible : lien cliquable #}
+                    <a href="{{ path('hangman_guess', {letter: letter}) }}" class="key">
+                        {{ letter }}
+                    </a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
