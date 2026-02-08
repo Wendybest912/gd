@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <a href="{{ path('admin_users') }}" class="btn btn-secondary mb-3"> Retour</a>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h3> {{ user.username }}</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Rôle :</strong>
+                {% if 'ROLE_ADMIN' in user.roles %}
+                    <span class="badge bg-danger"> Admin</span>
+                {% else %}
+                    <span class="badge bg-secondary"> User</span>
+                {% endif %}
+            </p>
+            <p><strong>Parties :</strong> {{ games|length }}</p>
+        </div>
+    </div>
+
+    {% if games|length > 0 %}
+        <h4> Historique</h4>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Difficulté</th>
+                    <th>Tentatives</th>
+                    <th>Résultat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>{{ game.difficulty }}</td>
+                    <td>{{ game.guessNumber }}</td>
+                    <td>
+                        {% if game.winOrLose == 'win' %}
+                            <span class="badge bg-success"> Victoire</span>
+                        {% else %}
+                            <span class="badge bg-danger"> Défaite</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-muted">Aucune partie.</p>
+    {% endif %}
+</div>
+{% endblock %}

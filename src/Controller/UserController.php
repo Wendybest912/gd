@@ -32,4 +32,23 @@ final class UserController extends AbstractController
             "form" => $form->createView()
         ]);
     }
+
+    /*#[Route("/admin/create", name: "admin_create")]
+    public function createAdmin(ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        $admin = new User($userPasswordHasher);
+        $admin->setUsername('admin');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword(
+            "admin"
+        );
+
+        $em = $doctrine->getManager();
+        $em->persist($admin);
+        $em->flush();
+
+        $this->addFlash('success', ' Admin créé ');
+        return $this->redirectToRoute('login');
+    }*/
 }
+

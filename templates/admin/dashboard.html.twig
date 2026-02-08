@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Panel Admin{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4"> Panel Admin</h1>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <h2>{{ totalUsers }}</h2>
+                    <p> Utilisateurs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h2>{{ totalGames }}</h2>
+                    <p> Parties</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h2>{{ totalWins }}</h2>
+                    <p> Victoires</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-danger text-white">
+                <div class="card-body">
+                    <h2>{{ totalLosses }}</h2>
+                    <p>Défaites</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <a href="{{ path('admin_users') }}" class="card text-decoration-none">
+                <div class="card-body text-center">
+                    <h4>Gérer les utilisateurs</h4>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ path('hangman_home') }}" class="card text-decoration-none">
+                <div class="card-body text-center">
+                    <h4>Retour au jeu</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
