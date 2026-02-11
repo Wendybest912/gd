@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Statistiques{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Mes Statistiques</h1>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h2>{{ totalGames }}</h2>
+                    <p>Parties jouées</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h2>{{ totalWins }}</h2>
+                    <p>Victoires</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-danger text-white">
+                <div class="card-body">
+                    <h2>{{ totalLosses }}</h2>
+                    <p>Défaites</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-warning text-dark">
+                <div class="card-body">
+                    <h2>{{ winRate }}%</h2>
+                    <p>Taux de victoire</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('hangman_home') }}" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+{% endblock %}

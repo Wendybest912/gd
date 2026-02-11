@@ -18,6 +18,7 @@
         "symfony/flex": "^2",
         "symfony/form": "8.0.*",
         "symfony/framework-bundle": "8.0.*",
+        "symfony/http-client": "8.0.*",
         "symfony/maker-bundle": "^1.65",
         "symfony/monolog-bundle": "^3.0|^4.0",
         "symfony/runtime": "8.0.*",

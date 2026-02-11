@@ -14,8 +14,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
-    // Dashboard
-    #[Route('/', name: 'admin_dashboard')]
+// Dashboard
+#[Route('/', name: 'admin_dashboard')]
 public function dashboard(ManagerRegistry $doctrine): Response
 {
     $em = $doctrine->getManager();

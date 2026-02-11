@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Controller\Api\Word as RandomWord;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,22 +60,9 @@ class HangmanController extends AbstractController
         ]
     ];
 
-    private array $words = [
-        'CHAT', 'PAIN', 'LUNE', 'ROSE', 'BLEU', 'NOIR', 'VERT', 'BEAU', 'JOUR', 'NUIT',
-        'PONT', 'ARBRE', 'FLEUR', 'TERRE', 'CIEL', 'MONDE', 'ROUGE', 'JAUNE',
-        
-        'MAISON', 'JARDIN', 'SOLEIL', 'ETOILE', 'ORANGE', 'VIOLET', 'MUSIQUE', 'CHANSON',
-        'TABLEAU', 'FENETRE', 'BOUQUET', 'CUISINE', 'CHAMBRE', 'VOITURE', 'MONTAGE',
-        
-        'CHOCOLAT', 'ELEPHANT', 'CROCODILE', 'PAPILLON', 'ORDINATEUR', 'BIBLIOTHEQUE',
-        'RESTAURANT', 'APPARTEMENT', 'TELEPHONE', 'TELEVISION', 'PRINTEMPS',
-        
-        'EXTRAORDINAIRE', 'ANTICONSTITUTION', 'DEVELOPPEMENT', 'GOUVERNEMENT',
-        'ENVIRONNEMENT', 'ADMINISTRATION', 'TRANSFORMATION', 'COMMUNICATION',
-        
-        'ANTICONSTITUTIONNELLEMENT', 'INTERDISCIPLINARITE', 'ELECTROENCEPHALOGRAMME',
-        'INTERNATIONALISATION', 'CONSTITUTIONNELLEMENT', 'CONTRAVENTIONNELLE'
-    ];
+    public function __construct(private RandomWord $word)
+    {
+    }
 
     private int $maxErrors = 6;
 
@@ -106,19 +94,10 @@ class HangmanController extends AbstractController
         
         $difficultyConfig = $this->difficulties[$difficulty] ?? $this->difficulties['facile'];
         
-        // Filtrer les mots par difficulté
-        $filteredWords = array_filter($this->words, function($word) use ($difficultyConfig) {
-            $length = strlen($word);
-            return $length >= $difficultyConfig['minLength'] && $length <= $difficultyConfig['maxLength'];
-        });
-        
-        // Si pas de mots, prendre un mot par défaut
-        if (empty($filteredWords)) {
-            $filteredWords = ['SYMFONY'];
-        }
-        
-        // Choisir un mot aléatoire
-        $word = $filteredWords[array_rand($filteredWords)];
+        $word = $this->word->getRandomWord(
+            $difficultyConfig['minLength'],
+            $difficultyConfig['maxLength']
+        );
         
         // Stocker en session
         $session->set('hangman_word', $word);
