@@ -5,6 +5,7 @@
         <li><a href="{{ path('hangman_rules') }}"> Règles</a></li>
 
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+            <li><a href="{{ path('statistique_menu') }}"> Statistique</a></li>
             <li><a href="{{ path('logout') }}"> Déconnexion</a></li>
             Bienvenue {{ app.user.username }}
         {% else %}
@@ -18,6 +19,6 @@
             </li>
         {% endif %}
 
-        <li><a href="{{ path('statistique_menu') }}"> Statistique</a></li>
+        
     </ul>
 </nav>

@@ -16,6 +16,10 @@ final class UserController extends AbstractController
     #[Route("/user/create", name: "user_create")]
     public function create(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('hangman_home');
+        }
+        
         $product = new User($userPasswordHasher); // Utilisateur vide 
         $form = $this->createForm(UserType::class, $product);
 
