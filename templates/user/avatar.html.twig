@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon avatar{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Photo de profil</h1>
+
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    {% if app.user.avatar %}
+        <img src="/uploads/avatars/{{ app.user.avatar }}" alt="Avatar" width="150">
+    {% else %}
+        <p>Pas encore d'avatar.</p>
+    {% endif %}
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit">Envoyer</button>
+    {{ form_end(form) }}
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ path('user_profil') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}

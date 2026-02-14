@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Mon profil</h1>
+
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="profil-card">
+        <div class="profil-avatar">
+            {% if app.user.avatar %}
+                <img src="/uploads/avatars/{{ app.user.avatar }}" alt="Mon avatar">
+            {% else %}
+                <div class="profil-avatar-default"></div>
+            {% endif %}
+        </div>
+
+        <div class="profil-actions">
+            <a class="btn btn-primary" href="{{ path('user_avatar') }}">Changer ma photo</a>
+            <a class="btn btn-primary" href="{{ path('statistique_menu') }}">Mes statistiques</a>
+            <a class="btn btn-primary" href="{{ path('statistique_historique') }}">Mon historique</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

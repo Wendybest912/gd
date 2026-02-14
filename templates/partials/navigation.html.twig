@@ -1,24 +1,28 @@
 <nav class="main-nav">
     <ul>
-        <li><a href="{{ path('hangman_home') }}"> Accueil</a></li>
-        <li><a href="{{ path('hangman_difficulties') }}"> Jouer</a></li>
-        <li><a href="{{ path('hangman_rules') }}"> Règles</a></li>
+        <li><a href="{{ path('hangman_home') }}">Accueil</a></li>
+        <li><a href="{{ path('hangman_difficulties') }}">Jouer</a></li>
+        <li><a href="{{ path('hangman_rules') }}">Règles</a></li>
 
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
-            <li><a href="{{ path('statistique_menu') }}"> Statistique</a></li>
-            <li><a href="{{ path('logout') }}"> Déconnexion</a></li>
-            <li>Bienvenue {{ app.user.username }}</li>
+            <li>
+                <a href="{{ path('user_profil') }}" class="nav-profil">
+                    {% if app.user.avatar %}
+                        <img src="/uploads/avatars/{{ app.user.avatar }}" alt="Avatar" class="nav-avatar">
+                    {% else %}
+                        👤
+                    {% endif %}
+                    {{ app.user.username }}
+                </a>
+            </li>
+            <li><a href="{{ path('logout') }}">Déconnexion</a></li>
         {% else %}
-            <li><a href="{{ path('login') }}"> Connexion</a></li>
-            <li><a href="{{ path('user_create') }}"> Inscription</a></li>
+            <li><a href="{{ path('login') }}">Connexion</a></li>
+            <li><a href="{{ path('user_create') }}">Inscription</a></li>
         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}
-            <li class="nav-item">
-                <a class="nav-link text-danger" href="{{ path('admin_dashboard') }}">Admin</a>
-            </li>
+            <li><a href="{{ path('admin_dashboard') }}">Admin</a></li>
         {% endif %}
-
-        
     </ul>
 </nav>
