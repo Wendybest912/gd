@@ -53,7 +53,6 @@ class StatController extends AbstractController {
             $ordre = 'DESC';
         }
 
-        // Construire les critères de recherche
         $criteres = ['player' => $this->getUser()];
 
         if ($filtreDifficulte !== '') {
