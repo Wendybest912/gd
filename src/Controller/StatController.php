@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Game;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/stat')]
@@ -28,6 +29,24 @@ class StatController extends AbstractController {
             'winRate' => $winRate
         ]);
 
+    }
+
+    #[Route('/historique', name: 'statistique_historique')]
+    public function historique(ManagerRegistry $doctrine): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $em = $doctrine->getManager();
+        $gameRepo = $em->getRepository(Game::class);
+
+        $myGames = $gameRepo->findBy(
+            ['player' => $this->getUser()],
+            ['id' => 'DESC']
+        );
+
+        return $this->render('hangman/historique.html.twig', [
+            'games' => $myGames,
+        ]);
     }
 
 }

@@ -7,7 +7,7 @@
         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
             <li><a href="{{ path('statistique_menu') }}"> Statistique</a></li>
             <li><a href="{{ path('logout') }}"> Déconnexion</a></li>
-            Bienvenue {{ app.user.username }}
+            <li>Bienvenue {{ app.user.username }}</li>
         {% else %}
             <li><a href="{{ path('login') }}"> Connexion</a></li>
             <li><a href="{{ path('user_create') }}"> Inscription</a></li>

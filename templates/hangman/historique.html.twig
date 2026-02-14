@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Historique{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1> Historique de mes parties</h1>
+
+
+    {% if games|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Difficulté</th>
+                    <th>Tentatives</th>
+                    <th>Résultat</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>{{ game.id }}</td>
+                    <td>{{ game.difficulty }}</td>
+                    <td>{{ game.guessNumber }}</td>
+                    <td>
+                        {% if game.winOrLose == 'win' %}
+                             Victoire
+                        {% else %}
+                             Défaite
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune partie jouée pour le moment.</p>
+    {% endif %}
+</div>
+
+<div class="text-center mt-4">
+    <a href="{{ path('statistique_menu') }}" class="btn btn-primary">Retour</a>
+</div>
+{% endblock %}
