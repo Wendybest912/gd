@@ -1,45 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Historique{% endblock %}
+{% block title %}Historique{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1> Historique de mes parties</h1>
+    <div class="container">
+        <h1>Historique</h1>
+        <a class="btn btn-primary" href="{{ path('statistique_menu') }}">Retour</a>
 
+        <form method="get" action="{{ path('statistique_historique') }}" class="filtres">
+            <label>Difficulté :</label>
+            <select name="difficulte">
+                <option value="">Toutes</option>
+                <option value="facile" {{ filtreDifficulte == 'facile' ? 'selected' }}>Facile</option>
+                <option value="moyen" {{ filtreDifficulte == 'moyen' ? 'selected' }}>Moyen</option>
+                <option value="difficile" {{ filtreDifficulte == 'difficile' ? 'selected' }}>Difficile</option>
+                <option value="impossible" {{ filtreDifficulte == 'impossible' ? 'selected' }}>Impossible</option>
+                <option value="divin" {{ filtreDifficulte == 'divin' ? 'selected' }}>Divin</option>
+            </select>
 
-    {% if games|length > 0 %}
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Difficulté</th>
-                    <th>Tentatives</th>
-                    <th>Résultat</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for game in games %}
-                <tr>
-                    <td>{{ game.id }}</td>
-                    <td>{{ game.difficulty }}</td>
-                    <td>{{ game.guessNumber }}</td>
-                    <td>
-                        {% if game.winOrLose == 'win' %}
-                             Victoire
-                        {% else %}
-                             Défaite
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Aucune partie jouée pour le moment.</p>
-    {% endif %}
-</div>
+            <label>Résultat :</label>
+            <select name="resultat">
+                <option value="">Tous</option>
+                <option value="win" {{ filtreResultat == 'win' ? 'selected' }}>Victoire</option>
+                <option value="lose" {{ filtreResultat == 'lose' ? 'selected' }}>Défaite</option>
+            </select>
 
-<div class="text-center mt-4">
-    <a href="{{ path('user_profil') }}" class="btn btn-primary">Retour</a>
-</div>
+            <button type="submit">Filtrer</button>
+        </form>
+
+        {% if games|length > 0 %}
+            <table class="historique-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="{{ path('statistique_historique', {tri: 'id', ordre: ordre == 'ASC' ? 'DESC' : 'ASC', difficulte: filtreDifficulte, resultat: filtreResultat}) }}">
+                                # {% if tri == 'id' %}{{ ordre == 'ASC' ? '⬆️' : '⬇️' }}{% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a href="{{ path('statistique_historique', {tri: 'difficulty', ordre: ordre == 'ASC' ? 'DESC' : 'ASC', difficulte: filtreDifficulte, resultat: filtreResultat}) }}">
+                                Difficulté {% if tri == 'difficulty' %}{{ ordre == 'ASC' ? '⬆️' : '⬇️' }}{% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a href="{{ path('statistique_historique', {tri: 'guessNumber', ordre: ordre == 'ASC' ? 'DESC' : 'ASC', difficulte: filtreDifficulte, resultat: filtreResultat}) }}">
+                                Tentatives {% if tri == 'guessNumber' %}{{ ordre == 'ASC' ? '⬆️' : '⬇️' }}{% endif %}
+                            </a>
+                        </th>
+                        <th>
+                            <a href="{{ path('statistique_historique', {tri: 'winOrLose', ordre: ordre == 'ASC' ? 'DESC' : 'ASC', difficulte: filtreDifficulte, resultat: filtreResultat}) }}">
+                                Résultat {% if tri == 'winOrLose' %}{{ ordre == 'ASC' ? '⬆️' : '⬇️' }}{% endif %}
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                    <tr>
+                        <td>{{ game.id }}</td>
+                        <td>{{ game.difficulty }}</td>
+                        <td>{{ game.guessNumber }}</td>
+                        <td>
+                            {% if game.winOrLose == 'win' %}
+                                <span class="badge-win">Victoire</span>
+                            {% else %}
+                                <span class="badge-lose">Défaite</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucune partie trouvée.</p>
+        {% endif %}
+    </div>
 {% endblock %}
