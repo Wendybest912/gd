@@ -2,14 +2,14 @@
     <div class="hangman-drawing">
         <pre>
   +---+
-  |   |
-  |   {% if errors >= 1 %}O{% else %} {% endif %}
+  |      |
+  |     {% if errors >= 1 %}O{% else %} {% endif %}
 
-  |   {% if errors >= 3 %}/{% else %} {% endif %}{% if errors >= 2 %}|{% else %} {% endif %}{% if errors >= 4 %}\{% else %} {% endif %}
+  |    {% if errors >= 3 %}/{% else %} {% endif %}{% if errors >= 2 %}|{% else %} {% endif %}{% if errors >= 4 %}\{% else %} {% endif %}
 
-  |   {% if errors >= 5 %}/{% else %} {% endif %} {% if errors >= 6 %}\{% else %} {% endif %}
+  |    {% if errors >= 5 %}/{% else %} {% endif %} {% if errors >= 6 %}\{% else %} {% endif %}
 
-  |      ‎
+  |    
 =========
         </pre>
     </div>

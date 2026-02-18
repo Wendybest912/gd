@@ -6,30 +6,36 @@
 <div class="container mt-5">
     <a href="{{ path('admin_users') }}" class="btn btn-secondary mb-3"> Retour</a>
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <div class="card mb-4">
         <div class="card-header bg-dark text-white">
-            <h3> {{ user.username }}</h3>
+            <h3>{{ user.username }}</h3>
         </div>
         <div class="card-body">
             <p><strong>Rôle :</strong>
                 {% if 'ROLE_ADMIN' in user.roles %}
-                    <span class="badge bg-danger"> Admin</span>
+                    <span class="badge bg-danger">Admin</span>
                 {% else %}
-                    <span class="badge bg-secondary"> User</span>
+                    <span class="badge bg-secondary">User</span>
                 {% endif %}
             </p>
             <p><strong>Parties :</strong> {{ games|length }}</p>
+            <a href="{{ path('admin_user_edit', {id: user.id}) }}" class="btn btn-warning">Modifier l'utilisateur</a>
         </div>
     </div>
 
     {% if games|length > 0 %}
-        <h4> Historique</h4>
+        <h4>Historique</h4>
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
                     <th>Difficulté</th>
                     <th>Tentatives</th>
                     <th>Résultat</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,10 +45,21 @@
                     <td>{{ game.guessNumber }}</td>
                     <td>
                         {% if game.winOrLose == 'win' %}
-                            <span class="badge bg-success"> Victoire</span>
+                            <span class="badge bg-success">Victoire</span>
                         {% else %}
-                            <span class="badge bg-danger"> Défaite</span>
+                            <span class="badge bg-danger">Défaite</span>
                         {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_game_edit', {id: game.id}) }}" 
+                           class="btn btn-warning btn-sm">Modifier</a>
+                        <form action="{{ path('admin_game_delete', {id: game.id}) }}" 
+                              method="POST" style="display:inline;"
+                              onsubmit="return confirm('Supprimer cette partie ?')">
+                            <input type="hidden" name="_token" 
+                                   value="{{ csrf_token('delete-game-' ~ game.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
